@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@nuxt/eslint": "^0.3.13",
-    "@nuxthub/core": "npm:@nuxthub/core@nightly",
+    "@nuxt/ui": "^2.16.0",
     "@nuxthub/core": "^0.6.4",
     "nuxt": "^3.11.2"
   },

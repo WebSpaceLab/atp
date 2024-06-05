@@ -1,7 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxthub/core', "@nuxt/eslint"],
+  typescript: { shim: false },
+  modules: ['@nuxthub/core', "@nuxt/eslint", "@nuxt/ui"],
   hub: {
     database: true,
     kv: true,
@@ -13,5 +14,6 @@ export default defineNuxtConfig({
       // Enable Server API documentation within NuxtHub
       openAPI: true
     }
-  }
+  },
+  css: ['~/assets/css/main.css']
 })

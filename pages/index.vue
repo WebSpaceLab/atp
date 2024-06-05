@@ -1,7 +1,9 @@
+<script setup lang="ts">
+</script>
+
 <template>
-  <main>
-    <ImageGallery />
-    <RedirectsPanel />
-    <MessagesPanel />
-  </main>
+  <UContainer>
+    <h1 class="font-semibold text-3xl">Home page</h1>
+
+  </UContainer>
 </template>
