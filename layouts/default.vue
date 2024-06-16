@@ -11,19 +11,19 @@ const links = ref([
   icon: 'i-heroicons-book-open',
   to: '/about'
 }, {
-  label: 'Pro',
+  label: 'Dashboard',
   icon: 'i-heroicons-square-3-stack-3d',
-  to: '/pro',
+  to: '/dashboard',
   children: [{
-    label: 'Pricing',
-    to: '/pro/pricing',
+    label: 'Profile',
+    to: '/dashboard/profile',
     icon: 'i-heroicons-ticket',
-    description: 'A simple pricing, for solo developers or teams.'
+    description: 'User profile'
   }, {
-    label: 'Templates',
-    to: '/pro/templates',
-    icon: 'i-heroicons-computer-desktop',
-    description: 'Get started with one of our official templates.'
+    label: 'Users',
+    to: '/dashboard/users',
+    icon: 'i-heroicons-ticket',
+    description: 'Users list'
   }]
 }, {
   label: 'Contact',

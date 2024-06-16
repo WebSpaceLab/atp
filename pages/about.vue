@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div>
+  <XPage container>
     <h1>About</h1>
-  </div>
+  </XPage>
 </template>

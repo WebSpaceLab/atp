@@ -11,21 +11,10 @@ defineProps({
   },
 })
 
-const isScroll = ref<boolean>(false)
-const { navbar, toggleMobile, closeMobile } = useNavbar()
+const { navbar, toggleMobile, closeMobile, handleScroll } = useNavbar()
 
 function scrollNavbar() {
-  const nav = document.getElementById('main-nav');
-
-  window.addEventListener('scroll', () => {
-    if(window.scrollY > nav!.scrollTop){
-      isScroll.value = true
-      // isShowMenu.value = false
-    } else {
-      isScroll.value = false
-      // isShowMenu.value = true
-    }
-  })
+  handleScroll('main-nav')
 }
 
 onMounted(() => {
@@ -38,7 +27,7 @@ onMounted(() => {
     id="main-nav"
     class="w-screen backdrop-blur shadow-lg shadow-black box-border"
     :class="[
-      isScroll
+      navbar.isScroll
         ? 'fixed h-20 top-0 left-0'
         : 'relative h-20 lg:h-30'
     ]"
@@ -71,7 +60,7 @@ onMounted(() => {
         <div
           class="relative w-full flex justify-between items-center"
           :class="
-            navbar.isMobile || isScroll ? 'show-content' : 'hidden-content'
+            navbar.isMobile || navbar.isScroll ? 'show-content' : 'hidden-content'
           "
         >
           <div class="flex w-full mx-auto container h-20 justify-center items-center space-x-10 pr-10">

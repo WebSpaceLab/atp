@@ -1,35 +1,56 @@
-type Navbar ={
-    isOpen: boolean
-    isMobile: boolean
+type Navbar = {
+  isOpen: boolean
+  isMobile: boolean
+  isScroll: boolean
 }
 
 export default function useNavbar() {
-    const navbar = useState<Navbar>('navbar', () => ({
-        isOpen: false,
-        isMobile: false
-    }))
+  const navbar = useState<Navbar>('navbar', () => ({
+    isOpen: false,
+    isMobile: false,
+    isScroll: false
+  }))
 
-    const toggleNavbar = () => {
-        navbar.value.isOpen = !navbar.value.isOpen
-    }
+  const toggleNavbar = () => {
+    navbar.value.isOpen = !navbar.value.isOpen
+  }
 
-    const closeNavbar = () => {
-        navbar.value.isOpen = false
-    }
+  const closeNavbar = () => {
+    navbar.value.isOpen = false
+  }
 
-    const toggleMobile = () => {
-        navbar.value.isMobile = !navbar.value.isMobile
-    }
+  const toggleMobile = () => {
+    navbar.value.isMobile = !navbar.value.isMobile
+  }
 
-    const closeMobile = () => {
-        navbar.value.isMobile = false
-    }
+  const closeMobile = () => {
+    navbar.value.isMobile = false
+  }
 
-    return {
-        navbar,
-        toggleNavbar,
-        closeNavbar,
-        toggleMobile,
-        closeMobile
+  const toggleScroll = (toggle) => {
+    navbar.value.isScroll = toggle
+  }
+
+  const handleScroll = (navId) => {
+    const nav = document.getElementById(navId)
+    if (nav) {
+      window.addEventListener('scroll', () => {
+        if(window.scrollY > nav!.scrollTop){
+          toggleScroll(true)
+        } else {
+          toggleScroll(false)
+        }
+      })
     }
+  }
+
+  return {
+    navbar,
+    toggleNavbar,
+    closeNavbar,
+    toggleMobile,
+    closeMobile,
+    toggleScroll,
+    handleScroll
+  }
 }
