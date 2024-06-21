@@ -7,7 +7,7 @@ const setColorTheme = (newTheme: string) => {
 </script>
 
 <template>
-  <UTooltip :text="`Zmień motyw na ${$colorMode.value == 'dark' ? 'jasny' : 'ciemny'}`"   :popper="{ placement: 'right' }">
+  <UTooltip :text="`Zmień motyw na ${$colorMode.value == 'dark' ? 'jasny' : 'ciemny'}`"   :popper="{ placement: 'bottom' }">
     <UButton color="primary" variant="link"  @click="setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')" >
       <Icon v-if="$colorMode.value == 'dark'" class="text-lg" name="line-md:moon-filled-loop" />
       <Icon v-else class="text-lg" name="line-md:moon-filled-to-sunny-filled-loop-transition" />

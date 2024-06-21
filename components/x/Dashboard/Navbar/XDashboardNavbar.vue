@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { navbar, toggleScroll, handleScroll } = useNavbar()
+const { navbar, handleScroll } = useNavbar()
 
 function scrollNavbar() {
   handleScroll('main-nav-dashboard')

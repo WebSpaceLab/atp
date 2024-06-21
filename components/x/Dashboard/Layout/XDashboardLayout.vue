@@ -16,6 +16,5 @@ const {sidebar} = useSidebar()
         <slot name="main" />
       </main>
     </div>
-    <slot name="addons" />
   </div>
 </template>

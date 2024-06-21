@@ -1,12 +1,12 @@
-<script setup>
+<script setup lang="ts">
   const { sidebar } = useSidebar()
 
-  let props = defineProps({
-    container: {
-      type: Boolean,
-      default: false
-    },
-  })
+  defineProps({
+  container: {
+    type: Boolean,
+    default: false,
+  }
+});
 
   const isShowSettingsSidebar = ref(false)
 
@@ -26,7 +26,7 @@
       sidebar.isShow ?
         sidebar.isRail ? 'lg:w-[calc(100%-110px)]' : 'lg:w-[calc(100%-280px)]'
         : '',
-      container ? 'container mx-auto' : ''
+      container ? 'container mx-auto max-w-7xl' : ''
     ]"
   >
     <!-- Header -->
@@ -38,11 +38,11 @@
 
             <UTooltip text="Ustawienia">
               <UButton
-                @click="openSettingsSidebar()"
                 color="primary"
                 variant="outline"
+                @click="openSettingsSidebar()"
               >
-                <Icon class="text-xl" name="material-symbols:settings-suggest-outline-rounded"></Icon>
+                <Icon class="text-xl" name="i-line-md-cog-filled-loop"/>
               </UButton>
             </UTooltip>
           </div>
@@ -50,23 +50,29 @@
       </template>
     </XDashboardPageHeader>
 
-      <div class="w-full px-4  lg:px-6 box-border transition-all duration-500" :class="sidebar.isShowHelperBar ? 'mt-36' : 'mt-20'">
-        <slot name="main" />
+    <div class="w-full px-4  lg:px-6 box-border transition-all duration-500" :class="sidebar.isShowHelperBar ? 'mt-36' : 'mt-20'">
+      <slot name="main" />
+    </div>
+
+    <div
+      v-if="isShowSettingsSidebar"
+      class="w-screen h-screen fixed top-0 right-0 z-40 bg-slate-800/40 cursor-pointer"
+      @click="closeSettingsSidebar()"
+    />
+
+    <transition
+      enter-active-class="transition ease-out duration-300"
+      enter-from-class="transform  translate-x-96"
+      enter-to-class="transform  translate-x-0"
+      leave-active-class="transition ease-in duration-300"
+      leave-from-class="transform  translate-x-0"
+      leave-to-class="transform  translate-x-96"
+    >
+      <div v-if="isShowSettingsSidebar"  class="fixed top-0 right-0 w-2/3 lg:w-200 h-screen shadow-lg shadow-black bg-gradient-to-r from-prime-light/80 to-second-light/80 dark:from-prime-dark/80 dark:to-second-dark/80 backdrop-blur z-50 border-solid border-green-500">
+        <slot name="sidebar" />
       </div>
+    </transition>
 
-      <div v-if="isShowSettingsSidebar" @click="closeSettingsSidebar()" class="w-screen h-screen fixed top-0 right-0 z-40 bg-slate-800/40 cursor-pointer"></div>
-
-      <transition
-        enter-active-class="transition ease-out duration-300"
-        enter-from-class="transform  translate-x-96"
-        enter-to-class="transform  translate-x-0"
-        leave-active-class="transition ease-in duration-300"
-        leave-from-class="transform  translate-x-0"
-        leave-to-class="transform  translate-x-96"
-      >
-        <div v-if="isShowSettingsSidebar"  class="fixed top-0 right-0 w-2/3 lg:w-200 h-screen shadow-lg shadow-black bg-gradient-to-r from-prime-light/80 to-second-light/80 dark:from-prime-dark/80 dark:to-second-dark/80 backdrop-blur z-50 border-solid border-green-500">
-          <slot name="sidebar" />
-        </div>
-      </transition>
+  
   </section>
 </template>

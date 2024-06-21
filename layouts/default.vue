@@ -35,14 +35,14 @@ const authLinks = computed(() => {
     if (route.path === '/auth/register') {
       return [{
         label: 'Login',
-        icon: 'i-heroicons-user',
+        icon: 'i-line-md-person-filled',
         to: '/auth/login',
         variant: 'ghost'
       }]
     } else if (route.path === '/auth/login'){
       return [{
         label: 'Register',
-        icon: 'i-heroicons-user-plus-16-solid',
+        icon: 'i-line-md-person-add-filled',
         to: '/auth/register',
         variant: 'ghost'
       }]
@@ -50,13 +50,13 @@ const authLinks = computed(() => {
       return [
         {
           label: 'Login',
-          icon: 'i-heroicons-user',
+          icon: 'i-line-md-person-filled',
           to: '/auth/login',
           variant: 'ghost'
         },
         {
           label: 'Register',
-          icon: 'i-heroicons-user-plus-16-solid',
+          icon: 'i-line-md-person-add-filled',
           to: '/auth/register',
           variant: 'ghost'
         }
@@ -82,12 +82,12 @@ const authLinks = computed(() => {
             <UTooltip :text="item.label">
               <UButton
                 :variant="item.variant"
-                :icon="item.icon"
-                size="sm"
                 color="primary"
                 square
                 :to="item.to"
-              />
+              >
+                <Icon class="text-2xl" :name="item.icon" />
+              </UButton>
             </UTooltip>
           </template>
         </template>

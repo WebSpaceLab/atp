@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  typescript: { shim: false },
+  typescript: { shim: false, },
   modules: ['@nuxthub/core', "@nuxt/eslint", "@nuxt/ui"],
   hub: {
     database: true,
@@ -15,5 +15,6 @@ export default defineNuxtConfig({
       openAPI: true
     }
   },
-  css: ['~/assets/css/main.css']
+  css: ['~/assets/css/main.css'],
+
 })

@@ -36,7 +36,7 @@ onMounted(() => {
         >
             <div class="h-full hidden md:block  -translate-x-2 translate-y-3">
               <UBreadcrumb :links="links" />
-                <slot name="header"></slot>
+                <slot name="header"/>
             </div>
 
             <div class="h-full flex justify-center items-center p-2 transition-all duration-500 rounded-lg  space-x-3 box-border" :class="navbar.isScroll ? 'bg-second-light/70 dark:bg-second-dark/90' : ''">

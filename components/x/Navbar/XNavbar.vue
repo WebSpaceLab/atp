@@ -11,7 +11,7 @@ defineProps({
   },
 })
 
-const { navbar, toggleMobile, closeMobile, handleScroll } = useNavbar()
+const { navbar, toggleMobile, handleScroll } = useNavbar()
 
 function scrollNavbar() {
   handleScroll('main-nav')
@@ -44,15 +44,9 @@ onMounted(() => {
         <slot name="left" />
       </div>
 
-      <div class="lg:hidden absolute top-6 left-0 px-3">
+      <div class="lg:hidden absolute z-10 top-6 left-0 px-3">
         <UTooltip text="Otwórz menu" :popper="{ placement: 'right' }">
-          <UButton
-            color="secondary"
-            variant="outline"
-            @click="toggleMobile"
-          >
-            <Icon name="la:bars" class="text-xl" />
-          </UButton>
+          <XBtnCloseToOpen variant="outline" :switcher="navbar.isMobile" @click="toggleMobile" />
         </UTooltip>
       </div>
 
@@ -106,30 +100,21 @@ onMounted(() => {
 
     <!-- Mobile Menu -->
     <transition
-      enter-active-class="transition ease-out duration-300"
+      enter-active-class="transition ease-out duration-500"
       enter-from-class="transform translate-x-[-100%]"
       enter-to-class="transform translate-x-0"
-      leave-active-class="transition ease-in duration-300"
+      leave-active-class="transition ease-in duration-500"
       leave-from-class="transform translate-x-0"
       leave-to-class="transform translate-x-[-100%]"
     >
       <div
         v-if="navbar.isMobile"
-        class="h-screen w-full fixed top-0 left-0 lg:hidden z-60 bg-white dark:bg-slate-900 border border-primary border-solid box-border"
+        class="h-screen w-full fixed top-0 left-0 lg:hidden z-60 bg-white dark:bg-slate-900 box-border"
       >
         <div
           class="w-full h-full relative flex flex-col justify-center items-center"
         >
-          <div class="h-10 absolute z-10 top-3 left-3">
-            <UTooltip text="Zamknij menu" :popper="{ placement: 'right' }">
-              <UButton
-                variant="outline"
-                @click="closeMobile"
-              >
-                <Icon name="ic:baseline-close" class="text-xl" />
-              </UButton>
-            </UTooltip>
-          </div>
+
 
           <div class="mt-10 w-full h-full flex flex-col justify-center items-between">
             <div class="w-full h-40 flex justify-center items-end">

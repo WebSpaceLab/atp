@@ -27,11 +27,11 @@ export default function useNavbar() {
     navbar.value.isMobile = false
   }
 
-  const toggleScroll = (toggle) => {
+  const toggleScroll = (toggle: boolean) => {
     navbar.value.isScroll = toggle
   }
 
-  const handleScroll = (navId) => {
+  const handleScroll = (navId: string) => {
     const nav = document.getElementById(navId)
     if (nav) {
       window.addEventListener('scroll', () => {
