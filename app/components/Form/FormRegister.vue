@@ -2,25 +2,9 @@
   import { z } from 'zod'
   import type { FormSubmitEvent } from '#ui/types'
 
-  // const schema: insertUserSchema = z.object({
-  //   username: z.string().min(3, 'First name is required'),
-  //   firstName: z.string().min(3, 'First name is required'),
-  //   lastName: z.string().min(3, 'Last name is required'),
-  //   email: z.string().email('Invalid email'),
-  //   password: z.string().min(8, 'Must be at least 8 characters'),
-  //   confirmPassword: z.string().refine((data: string) => data === state.password, {
-  //     message: 'Passwords do not match',
-  //   })
-  // })
-
   const schema = insertUserSchema
-
-
-  
   type Schema = z.output<typeof schema>
 
-  const isAgreement = ref<boolean>(false)
-  const isOpen = ref<boolean>(false)
   const state = reactive<Schema>({
     username: '',
     firstName: '',
@@ -32,24 +16,22 @@
     createdAt: new Date(),
     updatedAt: new Date()
   })
-  
-  // const confirmPasswordSchema = z.object({ 
-  //     password: z.string().refine((data: string) => data === state.password, {
-  //       message: 'Passwords do not match',
-  //     })
-  // })
-  // type ConfirmPasswordSchema = z.output<typeof confirmPasswordSchema>
-  // const confirm = reactive<ConfirmPasswordSchema>({
-  //   password: ''
-  // })
 
+  const isAgreement = ref<boolean>(false)
+  const isOpen = ref<boolean>(false)
   const confrimPassword = ref<string>('')
+  const previewPassword = ref<boolean>(false)
+  const previewConfirmPassword = ref<boolean>(false)
+  const error = ref<{path: string, message: string}>({ path: '', message: ''})
+  const validateConfrimPassword = (path: string, message: string) => {
+    error.value.path = path
+    error.value.message = message
+  }
 
   async function onSubmit(event: FormSubmitEvent<Schema>) {
-    // Do something with data
     await $fetch('/api/auth/register', {
       method: 'POST',
-      body: event
+      body: event.data
     }).then((res) => {
       console.log('Response: ', res)
     })
@@ -68,7 +50,15 @@
 
   watch(confrimPassword, (value) => {
     if(value !== state.password) {
-      console.log('Passwords do not match')
+      validateConfrimPassword('confrimPassword', 'Passwords do not match')  
+    }
+
+    if(value === state.password) {
+      validateConfrimPassword('', '')
+    }
+
+    if(value === '') {
+      validateConfrimPassword('', '')
     }
   })
 </script>
@@ -76,29 +66,45 @@
 <template>
   <UForm :schema="schema" :state="state" class="w-full space-y-4" @submit="onSubmit">
     <UFormGroup required label="Username" name="username">
-      <UInput v-model="state.username" />
+      <UInput color="primary" v-model="state.username" />
     </UFormGroup>
 
     <div class="w-full flex space-x-4">
       <UFormGroup required class="w-full" label="First Name" name="firstName">
-        <UInput v-model="state.firstName" />
+        <UInput color="primary" v-model="state.firstName" />
       </UFormGroup>
 
       <UFormGroup required class="w-full" label="Last Name" name="lastName">
-        <UInput v-model="state.lastName" />
+        <UInput color="primary" v-model="state.lastName" />
       </UFormGroup>
     </div>
 
     <UFormGroup required label="Email" name="email">
-      <UInput v-model="state.email" type="email" />
+      <UInput color="primary" v-model="state.email" type="email" />
     </UFormGroup>
 
     <UFormGroup required class="w-full" label="Password" name="password">
-      <UInput v-model="state.password" type="password" />
+      <UInput :ui="{icon: {trailing: { pointer: ''}}}" color="primary" v-model="state.password" :type="previewPassword ? 'text' : 'password'" >
+        <template #trailing>
+          <UButton variant="link" @click="previewPassword = !previewPassword"">
+            <Icon v-if="previewPassword" name="i-line-md-watch-twotone"  class="text-gray-500 dark:text-gray-400 text-2xl"/>
+            <Icon v-else name="i-line-md-watch-off-twotone"  class="text-gray-500  dark:text-gray-400 text-2xl"/>
+          </UButton>
+        </template>
+      </UInput>
     </UFormGroup>
 
-    <UFormGroup required class="w-full" label="Confirm Password" name="confirmPassword">
-      <UInput v-model="confrimPassword" type="password" />
+    <UFormGroup  required class="w-full " label="Confirm Password" name="confirmPassword" >
+      <UInput :ui="{icon: {trailing: { pointer: ''}}}" :color="error.path === 'confrimPassword' ? 'red' : 'primary'" v-model="confrimPassword" :type="previewConfirmPassword ? 'text' : 'password'" >
+        <template #trailing>
+          <UButton variant="link" @click="previewConfirmPassword = !previewConfirmPassword"">
+            <Icon v-if="previewConfirmPassword" name="i-line-md-watch-twotone"  class="text-gray-500 dark:text-gray-400 text-2xl"/>
+            <Icon v-else name="i-line-md-watch-off-twotone"  class="text-gray-500  dark:text-gray-400 text-2xl"/>
+          </UButton>
+        </template>
+      </UInput>
+      
+      <p v-if="error.path === 'confrimPassword'"  class="text-red-400 text-sm">{{ error.message }}</p>
     </UFormGroup>
 
     <UCheckbox required color="primary" v-model="isAgreement">

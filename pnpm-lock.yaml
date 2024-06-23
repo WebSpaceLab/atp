@@ -45,6 +45,9 @@ importers:
       '@nuxt/eslint-config':
         specifier: ^0.3.13
         version: 0.3.13(eslint@9.5.0)(typescript@5.5.2)
+      '@types/node':
+        specifier: ^20.14.7
+        version: 20.14.7
       eslint:
         specifier: ^9.4.0
         version: 9.5.0

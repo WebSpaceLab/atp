@@ -1,7 +1,7 @@
 
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
-import { roleUserValues } from '~/utils/constansAuth'
+import { roleUserValues } from '../../../app/utils/constansAuth'
 import { z } from 'zod';
 
 export const users = sqliteTable('users', {
@@ -31,4 +31,5 @@ export const insertUserSchema = createInsertSchema(users, {
   email: z.string().email('Invalid email'),
   password: z.string().min(8, 'Must be at least 8 characters'),
   isAgree: z.boolean(),
+  role: z.enum(roleUserValues),
 });

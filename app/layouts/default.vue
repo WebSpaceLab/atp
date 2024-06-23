@@ -81,7 +81,7 @@ const authLinks = computed(() => {
           <template v-for="item in authLinks" :key="item.label">
             <UTooltip :text="item.label">
               <UButton
-                :variant="item.variant"
+                variant="ghost"
                 color="primary"
                 square
                 :to="item.to"
