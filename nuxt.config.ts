@@ -1,10 +1,20 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   future: { compatibilityVersion: 4 },
   devtools: { enabled: true },
   typescript: { shim: false, },
+  srcDir: 'app',
   ssr: true,
-  modules: ['@nuxthub/core', "@nuxt/eslint", "@nuxt/ui", "nuxt-auth-utils"],
+  modules: [
+    '@nuxthub/core',
+    "@nuxt/eslint",
+    "@nuxt/ui",
+    "nuxt-auth-utils",
+    '@pinia/nuxt',
+    "@nuxt/content",
+    "@nuxt/image"
+  ],
   hub: {
     database: true,
     kv: true,
@@ -18,6 +28,7 @@ export default defineNuxtConfig({
     }
   },
   css: ['~/assets/styles/app.css'],
+
   // runtimeConfig: {
   //   // oauth: {
   //   //   // ts-ignore

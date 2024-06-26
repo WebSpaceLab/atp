@@ -33,7 +33,7 @@ onMounted(() => {
             <slot name="content" />
           </div>
 
-          <div class="w-70 flex justify-end items-center pr-6 box-border">
+          <div class="w-70 flex justify-end items-center pr-6 space-x-3 box-border">
             <div class="flex justify-center items-center space-x-3">
               <XBtnColorMode />
             </div>

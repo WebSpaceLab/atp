@@ -36,7 +36,7 @@
           <div class="flex justify-end  space-x-3">
             <slot name="header-panel"/>
 
-            <UTooltip text="Ustawienia">
+            <UTooltip text="Settings">
               <UButton
                 color="primary"
                 variant="outline"

@@ -12,7 +12,7 @@ type Sidebar = {
   }[]
 }
 
-export const useSidebar = () =>  {
+export const useSidebar = () => {
   const sidebar = useState<Sidebar>('sidebar', () => ({
     isShow: true,
     isRail: false,
@@ -20,14 +20,15 @@ export const useSidebar = () =>  {
     isShowHelperBar: true,
     links: [
       {
-        label: 'Strona główna',
+        label: 'Homepage',
         icon: 'i-heroicons-home-modern-solid',
         to: '/',
         type: 'basic',
         access: 'user'
       },
+
       {
-        label: 'Panel główny',
+        label: 'Dashboard',
         icon: 'i-heroicons-presentation-chart-line-20-solid',
         to: '/dashboard',
         type: 'basic',
@@ -41,6 +42,7 @@ export const useSidebar = () =>  {
           },
         ]
       },
+
       {
         label: 'Profile',
         icon: 'i-heroicons-user-plus-solid',
@@ -61,6 +63,7 @@ export const useSidebar = () =>  {
           },
         ]
       },
+
       {
         label: 'Users',
         icon: 'i-heroicons-user-group-solid',

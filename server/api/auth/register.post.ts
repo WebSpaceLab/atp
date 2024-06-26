@@ -1,12 +1,58 @@
-import { insertUserSchema } from '../../database/schemas/users.schema'
-import { useValidatedBody, z } from 'h3-zod'
-export default defineEventHandler(async (event) => {
-  // const body = await readValidatedBody(event, insertUserSchema.parse)
-  const body = await useValidatedBody(event, insertUserSchema)
-  // const body = await readBody(event)
-  console.log('body', body)
+import { registerSchema } from '../../../app/utils/register'
+import * as bcrypt from "bcrypt"
+import { useValidatedBody } from 'h3-zod'
 
+export default defineEventHandler(async (event) => {
+  const body = await useValidatedBody(event, registerSchema)
+  const { username, firstName, lastName, email, password, isAgree } = body
+
+  // I check if a given ussername already exists
+  const usernameExist = await useDrizzle().select().from(tables.users).where(eq(tables.users.username, username)).all()
+
+  if (usernameExist.length !== 0) {
+    throw createError({
+      status: 409,
+      statusMessage: 'Username already exists'
+    })
+  }
+
+  // I check if a given email already exists
+  const emailExist = await useDrizzle().select().from(tables.users).where(eq(tables.users.email, email)).all()
+
+  if (emailExist.length !== 0) {
+    throw createError({
+      status: 409,
+      statusMessage: 'Email already exists'
+    })
+  }
+
+  const hashedPassword = bcrypt.hashSync(password, 10)
+
+  const user = await useDrizzle().insert(tables.users).values({
+    username,
+    firstName,
+    lastName,
+    email,
+    password: hashedPassword,
+    isAgree,
+    role: 'user',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  }).returning().get()
+
+  if (!user) {
+    throw createError({
+      status: 417,
+      statusMessage: 'User not created'
+    })
+  }
+
+  // TODO - send email to user with confirmation link or something like that. 
   return {
-    body
+    message: {
+      title: 'Success',
+      description: 'User created successfully',
+      color: 'primary'
+    }
   }
 })

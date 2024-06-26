@@ -1,7 +1,9 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
     const { loggedIn } = useUserSession()
+    const { openLoginModal } = useAuthModal()
 
     if (!loggedIn.value) {
-        return await navigateTo('/auth/login')
+        openLoginModal()
+        return await navigateTo('/')
     }
 })

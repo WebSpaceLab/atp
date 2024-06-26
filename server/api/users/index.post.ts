@@ -1,7 +1,8 @@
-import { insertUserSchema } from '../../database/schemas/users.schema'
+import { userSchema } from '~/utils/users'
+import { useValidatedBody, z } from 'h3-zod'
 
 export default defineEventHandler(async (event) => {
-  const body = await readValidatedBody(event, insertUserSchema.parse)
+  const body = await useValidatedBody(event, userSchema)
 
   return {
     body

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const route = useRoute()
+
 const links = ref([
 {
   label: 'Home',
@@ -31,38 +31,8 @@ const links = ref([
   to: '/contact'
 }])
 
-const authLinks = computed(() => {
-    if (route.path === '/auth/register') {
-      return [{
-        label: 'Login',
-        icon: 'i-line-md-person-filled',
-        to: '/auth/login',
-        variant: 'ghost'
-      }]
-    } else if (route.path === '/auth/login'){
-      return [{
-        label: 'Register',
-        icon: 'i-line-md-person-add-filled',
-        to: '/auth/register',
-        variant: 'ghost'
-      }]
-    } else {
-      return [
-        {
-          label: 'Login',
-          icon: 'i-line-md-person-filled',
-          to: '/auth/login',
-          variant: 'ghost'
-        },
-        {
-          label: 'Register',
-          icon: 'i-line-md-person-add-filled',
-          to: '/auth/register',
-          variant: 'ghost'
-        }
-      ]
-    }
-  })
+const { openLoginModal, openRegisterModal } = useAuthModal()
+
 </script>
 
 <template>
@@ -78,18 +48,31 @@ const authLinks = computed(() => {
         </template>
 
         <template #action>
-          <template v-for="item in authLinks" :key="item.label">
-            <UTooltip :text="item.label">
+          <div v-if="!useAuthStore().loggedIn" class="flex space-x-3">
+            <UTooltip text="Login">
               <UButton
                 variant="ghost"
                 color="primary"
                 square
-                :to="item.to"
+                @click="openLoginModal()"
               >
-                <Icon class="text-2xl" :name="item.icon" />
+                <Icon class="text-2xl" name="i-line-md-person-filled" />
               </UButton>
             </UTooltip>
-          </template>
+
+            <UTooltip text="Register">
+              <UButton
+                variant="ghost"
+                color="primary"
+                square
+                @click="openRegisterModal()"
+              >
+                <Icon class="text-2xl" name="i-line-md-person-add-filled" />
+              </UButton>
+            </UTooltip>
+          </div>
+
+          <XDropdownManageAccount v-else />
         </template>
       </XNavbar>
     </template>
@@ -107,7 +90,8 @@ const authLinks = computed(() => {
     </template>
 
     <template #addons>
-
+      <ModalRegister />
+      <ModalLogin />  
     </template>
   </XLayout>
 </template>
