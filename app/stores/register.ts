@@ -43,6 +43,9 @@ export const useRegisterStore = defineStore('Register', () => {
       }
     }).finally(() => {
       loading.value = false
+      setTimeout(() => {
+        error.value = null
+      }, 5000)
     })
   }
 

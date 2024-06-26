@@ -1,5 +1,5 @@
 import { registerSchema } from '../../../app/utils/register'
-import * as bcrypt from "bcrypt"
+import * as argon2 from "argon2";
 import { useValidatedBody } from 'h3-zod'
 
 export default defineEventHandler(async (event) => {
@@ -26,7 +26,8 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const hashedPassword = bcrypt.hashSync(password, 10)
+  // TODO - hash the password before saving it to the database
+  const hashedPassword = await argon2.hash(password)
 
   const user = await useDrizzle().insert(tables.users).values({
     username,

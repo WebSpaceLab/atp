@@ -1,5 +1,5 @@
 import { loginSchema } from '../../../app/utils/login'
-import * as bcrypt from "bcrypt"
+import * as argon2 from "argon2";
 import { useValidatedBody } from 'h3-zod'
 
 export default defineEventHandler(async (event) => {
@@ -16,7 +16,10 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  if (!bcrypt.compareSync(password, user.password as string)) {
+  // TODO - compare the password with the hashed password from the database
+  const isPasswordCorrect = await argon2.verify(user.password, password)
+
+  if (!isPasswordCorrect) {
     throw createError({
       status: 403,
       statusMessage: 'Password is incorrect'

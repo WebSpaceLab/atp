@@ -1,5 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
-
 export default defineNuxtConfig({
   future: { compatibilityVersion: 4 },
   devtools: { enabled: true },
@@ -28,18 +26,4 @@ export default defineNuxtConfig({
     }
   },
   css: ['~/assets/styles/app.css'],
-
-  // runtimeConfig: {
-  //   // oauth: {
-  //   //   // ts-ignore
-  //   //   Google: {
-  //   //     // @ts-ignore
-  //   //     clientId: process.env.NUXT_OAUTH_GOOGLE_CLIENT_ID,
-  //   //     // @ts-ignore
-  //   //     clientSecret: process.env.NUXT_OAUTH_GOOGLE_CLIENT_SECRET
-  //   //   }
-  //   // }
-
-  // },
-
 })

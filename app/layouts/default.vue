@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-
 const links = ref([
 {
   label: 'Home',
@@ -32,7 +31,6 @@ const links = ref([
 }])
 
 const { openLoginModal, openRegisterModal } = useAuthModal()
-
 </script>
 
 <template>
